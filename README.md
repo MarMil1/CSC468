@@ -14,5 +14,5 @@
 
 ### Step 3: Run download_data.py
 
-### Step 4: Run integrate_data.py
-
+### Step 4: Run explore_data.py
+We used this file to perform data exlporation so we could determine what we wanted to visualize using D3.js
