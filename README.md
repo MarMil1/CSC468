@@ -7,17 +7,10 @@
 
 ### Step 2: Confirm you have installed the required Python libraries
 1. kaggle
-<<<<<<< HEAD
-2. os
-3. pandas
-4. matplotlib
-5. numpy
-6. flask
-=======
 2. pandas
-3. numpy
-4. flask
->>>>>>> 90a3435c9c1d885755efc3b70c84e67ea47eeef8
+3. matplotlib
+4. numpy
+5. flask
 
 ### Step 3: Run download_data.py
 
