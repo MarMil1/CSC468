@@ -1,6 +1,8 @@
 # CSC 468 Final Project
 ## Team: BMMN
 
-Step 1: Create a kaggle.com account in order to download the dataset. Make sure you are logged into Kaggle before moving on to step 2.
+###Step 1: Create a kaggle.com account and setup API access in order to download the dataset.
+1. Navigate to the Kaggle homepage at www.kaggle.com -> Your Account -> Create New API token
+2. Move kaggle.json to C:\Users\[user name]\.kaggle
 
-Step 2: Run download_data.py
+###Step 2: Run download_data.py
