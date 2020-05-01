@@ -7,10 +7,9 @@
 
 ### Step 2: Confirm you have installed the required Python libraries
 1. kaggle
-2. os
-3. pandas
-4. numpy
-5. flask
+2. pandas
+3. numpy
+4. flask
 
 ### Step 3: Run download_data.py
 
