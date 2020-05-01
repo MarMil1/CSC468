@@ -5,7 +5,7 @@
 1. Navigate to the Kaggle homepage at www.kaggle.com -> Your Account -> Create New API token
 2. Move kaggle.json to C:\Users\\[user name]\\.kaggle
 
-### Step 2: Confirm you have installed the neccessary Python libraries
+### Step 2: Confirm you have installed the required Python libraries
 1. kaggle
 2. os
 3. pandas
