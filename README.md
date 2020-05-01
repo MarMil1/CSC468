@@ -1,5 +1,5 @@
 # CSC 468 Final Project
-## Team: BMMN
+## Team Name: BMMN
 
 ### Step 1: Create a kaggle.com account and setup API access in order to download the dataset
 1. Navigate to the Kaggle homepage at www.kaggle.com -> Your Account -> Create New API token
