@@ -4,6 +4,7 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sb
 
 if __name__ == '__main__':
     # Read in the csv file
@@ -30,4 +31,4 @@ if __name__ == '__main__':
     # How many observations have data for EVERY column?
     print('\nNumber of observations without missing data:', len(ext_data.dropna().index))
 
-    # We will need to decide 
+    # Before we can decide which columns or observations to drop, lets see how they correlate

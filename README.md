@@ -9,8 +9,9 @@
 1. kaggle
 2. pandas
 3. matplotlib
-4. numpy
-5. flask
+4. seaborn
+5. numpy
+6. flask
 
 ### Step 3: Run download_data.py
 
