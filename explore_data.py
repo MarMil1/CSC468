@@ -8,8 +8,11 @@ import matplotlib.pyplot as plt
 if __name__ == '__main__':
     # Read in the csv file
     data_in_file = 'data/states_all_extended.csv'
+    ext_data = pd.read_csv(data_in_file)
+
+    data_in_file = 'data/states_all.csv'
     data = pd.read_csv(data_in_file)
 
-    print(data.head())
+    print(len(ext_data.index))
 
-    
+    print(len(data.index))
