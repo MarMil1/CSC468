@@ -15,4 +15,7 @@
 ### Step 3: Run download_data.py
 
 ### Step 4: Run explore_data.py
-We used this file to perform data exlporation so we could determine what we wanted to visualize using D3.js
+We used this file to perform data exlporation so we could determine what we wanted to visualize using D3.js. The output of this file will give you an idea of why we took the direction that we did.
+
+### Step 5: Run viz_project.py
+This will launch the web server.
