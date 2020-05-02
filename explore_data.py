@@ -3,8 +3,8 @@
 # Step 4: Run this file to download the dataset to your local machine in the correct folder that will be ignored by Git
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sb
+#import matplotlib.pyplot as plt
+#import seaborn as sb
 
 if __name__ == '__main__':
     # Read in the csv file
@@ -32,3 +32,5 @@ if __name__ == '__main__':
     print('\nNumber of observations without missing data:', len(ext_data.dropna().index))
 
     # Before we can decide which columns or observations to drop, lets see how they correlate
+    ext_data_corr = ext_data.corr()
+    ext_data_corr.to_csv('data/ext_data_corr.csv')
