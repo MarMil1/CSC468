@@ -12,6 +12,7 @@
 4. seaborn
 5. numpy
 6. flask
+7. geopandas
 
 ### Step 3: Run download_data.py
 
