@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project - MVP</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Balsamiq+Sans">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<body class="bg-dark text-white" style="font-family: 'Balsamiq Sans', serif">
+  <div class="container p-3 my-3 bg-dark text-white" style="width: 900px">
+    <h3><center>BMMN Project</center></h1>
+    <h1><center>MVP to Test Buttons and Clicking Linking</center></h2>
+  </div>
+  <!-- <div id="chart"></div>
+  <div id="chart1"></div> -->
+  <svg id="chart" class="chart1" width="500" height="400"></svg>
+  <button onclick="update('blue')">Blue</button>
+  <button onclick="update('red')">Red</button>
+  <svg id="chart1" class="chart2" width="500" height="400"></svg>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="data.json.js"></script>
+  <script src="geo_json_data.json.js"></script>
+  <script src="data_for_lookup.csv.js"></script>
+  <script src="app.js"></script>
+  <script src="sub_chart.js"></script>
+  <script>
+
+    var data_lookup = d3.csvParse(
+      data_for_lookup,
+
+      function(d){
+        d.state = d.state;
+        d.value= +d.value;
+        return d;
+      }
+    );
+
+    function lookup_data(lookup_val) {
+      var dct = {};
+      for (var i = 0; i < data_lookup.length; i++) {
+
+          if(lookup_val.includes(data_lookup[i].state)){
+            dct = {"state":lookup_val, "value":data_lookup[i].value}
+          }
+
+        }
+      return dct;
+    };
+
+    var svg = d3.select("#chart1");
+    var global_key = 'Illinois';
+
+    function update(color) {
+      CHART.drawChart(svg, lookup_data(global_key), global_key, color)
+
+    }
+
+    function update_var(key) {
+      global_key = key;
+
+    }
+
+    CHART = Chart();
+    MAP = Map();
+    MAP.drawMap();
+    MAP.dispatch.on(
+      "selected",
+      function(key) {
+        update_var(key);
+        CHART.drawChart(svg, lookup_data(key), global_key, 'blue');
+      } );
+  </script>
+</body>
+</html>
