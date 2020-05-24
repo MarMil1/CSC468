@@ -1,0 +1,29 @@
+#chart{
+    width: 500px;
+    height: 400px;
+    background-color: #D3D3D3;
+    margin: 25px auto;
+}
+#chart1{
+    width: 500px;
+    height: 400px;
+    background-color: #D3D3D3;
+    margin: 25px auto;
+}
+#buttons{
+    width: 800px;
+    margin: 25px auto;
+    text-align: center;
+}
+button{
+    background-color: #3297bf;
+    color: #fff;
+    width: 100px;
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+    border: 0;
+    outline: 0;
+    transition: all .2s linear;
+    cursor: pointer;
+}
