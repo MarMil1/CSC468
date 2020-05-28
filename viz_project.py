@@ -14,9 +14,9 @@ def index():
     except Exception as e:
         return(str(e))
 
-@app.route('/data/<path:path>')
+@app.route('/mvp/<path:path>')
 def send_html(path):
-    return send_from_directory('data', path)
+    return send_from_directory('mvp', path)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
