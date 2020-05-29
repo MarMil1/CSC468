@@ -1,79 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Project - MVP</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Balsamiq+Sans">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<body class="bg-dark text-white" style="font-family: 'Balsamiq Sans', serif">
-  <div class="container p-3 my-3 bg-dark text-white" style="width: 900px">
-    <h3><center>BMMN Project</center></h1>
-    <h1><center>MVP to Test Buttons and Clicking Linking</center></h2>
-  </div>
-  <!-- <div id="chart"></div>
-  <div id="chart1"></div> -->
-  <svg id="chart" class="chart1" width="500" height="400"></svg>
-  <button onclick="update('blue')">Blue</button>
-  <button onclick="update('red')">Red</button>
-  <svg id="chart1" class="chart2" width="500" height="400"></svg>
-  <script src="https://d3js.org/d3.v4.js"></script>
-  <script src="data.json.js"></script>
-  <script src="geo_json_data.json.js"></script>
-  <script src="data_for_lookup.csv.js"></script>
-  <script src="app.js"></script>
-  <script src="sub_chart.js"></script>
-  <script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <title>BMMW</title>
 
-    var data_lookup = d3.csvParse(
-      data_for_lookup,
+</head>
 
-      function(d){
-        d.state = d.state;
-        d.value= +d.value;
-        return d;
-      }
-    );
+<body>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="population.json.js"></script>
+    <script src="geo_json_data.json.js"></script>
+    <script src="choropleth.js"></script>
+    <script src="d3-tip.js"></script>
+    <script src="finCharts.js"></script>
+    <script src="enrollCharts.js"></script>
+    
+    <!-- tooltip -->
+    <div id="tooltip" class="hidden">
+        <p><strong>State</strong></p>
+        <p><span id="value">100</span>%</p>
+    </div>
 
-    function lookup_data(lookup_val) {
-      var dct = {};
-      for (var i = 0; i < data_lookup.length; i++) {
+    <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">BMMW</a>
+        <input type="text" class="form-control form-control-primary w-100" placeholder="Search...">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Logout</a>
+            </li>
+        </ul>
+    </nav>
 
-          if(lookup_val.includes(data_lookup[i].state)){
-            dct = {"state":lookup_val, "value":data_lookup[i].value}
-          }
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 bg-light d-none d-md-block sidebar">
+                <div class="left-sidebar">
+                    <ul class="nav flex-column sidebar-nav">
+                        <!-- sidebar enrollment -->
+                        <li class="nav-item">
+                            <a id="enroll" class="nav-link active" href="#enrollment">
+                                <i class="fas fa-user-graduate mr-2"></i>
+                                Enrollment
+                            </a>
+                        </li>
 
-        }
-      return dct;
-    };
+                        <!-- sidebar financial -->
+                        <li class="nav-item">
+                            <a id="fin" class="nav-link" href="#fin">
+                                <i class="fas fa-money-check-alt mr-2"></i>
+                                Financial
+                            </a>
+                        </li>
 
-    var svg = d3.select("#chart1");
-    var global_key = 'Illinois';
+                        <!-- sidebar achievement -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-trophy mr-2"></i>
+                                <!-- <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd" /></svg> -->
+                                Achievement
+                            </a>
+                        </li>
 
-    function update(color) {
-      CHART.drawChart(svg, lookup_data(global_key), global_key, color)
+                        <!-- sidebar extras -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                Extras
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    }
+    <!-- main body -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <h3 style="margin-top: -80px;">Enrollment</h3>
+        <hr>
 
-    function update_var(key) {
-      global_key = key;
+        <!-- Dark table -->
+        <div class="map-graph">
+            <svg id="choropleth" width="600" height="400"></svg>
+        </div>
 
-    }
+        <h3>Graphs</h3>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graph 1</h5>
+                        <svg id="Chart1" class="chart1" width="500" height="400"></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graph 2</h5>
+                        <p class="card-text">Pie Chart</p>
+                        <a href="#" class="btn btn-primary">Print</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    CHART = Chart();
-    MAP = Map();
-    MAP.drawMap();
-    MAP.dispatch.on(
-      "selected",
-      function(key) {
-        update_var(key);
-        CHART.drawChart(svg, lookup_data(key), global_key, 'blue');
-      } );
-  </script>
-</body>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graph 3</h5>
+                        <p class="card-text">Bar Chart</p>
+                        <a href="#" class="btn btn-primary">Print</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Graph 4</h5>
+                        <p class="card-text">Scattor plots</p>
+                        <a href="#" class="btn btn-primary">Print</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- script -->
+    <script>
+        var svgMap = d3.select("#choropleth");
+        var svgFinChart1 = d3.select("#Chart1");
+        var svgEnrollChart1 = d3.select("#Chart1");
+
+        var last_clicked = 'Nothing'
+
+        function vizMapper (state_passed){
+            if(last_clicked=='fin'){
+                FIN1.drawMap(svgFinChart1, state_passed);
+            }
+
+        };
+
+        MAP = Map();
+        MAP.drawMap(svgMap);
+
+        MAP.dispatch.on(
+            "selected",
+            function(key) {
+                vizMapper(key);
+            } 
+        );
+
+        $('#fin').on('click', function () {
+
+            last_clicked = 'fin';
+
+            FIN1 = finMap1();
+            FIN1.drawMap(svgFinChart1);
+        })
+
+        $('#enroll').on('click', function () {
+
+            ENR1 = enrollMap1();
+            ENR1.drawMap(svgEnrollChart1);
+        })
+
+    </script>
+
+
+
 </html>
