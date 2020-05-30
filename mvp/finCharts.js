@@ -2682,16 +2682,27 @@ var finMap2 = function () {
 
             var data = data_full[state.toUpperCase()]
             
-                // Add X axis
+                // Add X axis - for bar-
+                // var x = d3.scaleLinear()
+                // .domain([0, 45])
+                // .range([ 0, width]);
+                // svg.append("g")
+                // .attr("transform", "translate(75," + height + ")")
+                // .call(d3.axisBottom(x))
+                // .selectAll("body")
+                //   .attr("transform", "translate(-10,0)rotate(-45)")
+                //   .style("text-anchor", "end");
+
+                // Add X axis - for lolli
                 var x = d3.scaleLinear()
-                .domain([0, 45])
-                .range([ 0, width]);
+                    .domain([0, 45])
+                    .range([ 75, width+45]);
                 svg.append("g")
-                .attr("transform", "translate(75," + height + ")")
-                .call(d3.axisBottom(x))
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x))
                 .selectAll("body")
-                  .attr("transform", "translate(-10,0)rotate(-45)")
-                  .style("text-anchor", "end");
+                    .attr("transform", "translate(-10,0)rotate(-45)")
+                    .style("text-anchor", "end");
 
                 // Y axis
                 var y = d3.scaleBand()
@@ -2702,26 +2713,49 @@ var finMap2 = function () {
                 .attr("transform", "translate(75,0)")
                 .call(d3.axisLeft(y))
 
-                //Bars
+                // //Bars
+                // svg.selectAll("body")
+                // .data(data)
+                // .enter()
+                // .append('g')
+                // .append("rect")
+                // .attr("x", 75 )
+                // .attr("y", function(d) { return y(d.label); })
+                // .attr("width", function(d) { return x(+d.value/1000000); })
+                // .attr("height", y.bandwidth() )
+                // .attr("fill", '#e41a1c')
+
+
                 svg.selectAll("body")
-                .data(data)
-                .enter()
-                .append('g')
-                .append("rect")
-                .attr("x", 75 )
-                .attr("y", function(d) { return y(d.label); })
-                .attr("width", function(d) { return x(+d.value/1000000); })
-                .attr("height", y.bandwidth() )
-                .attr("fill", '#e41a1c')
+                    .data(data)
+                    .enter()
+                    .append('g')
+                    .append("line")
+                        .attr("x1", function(d) { return x(d.value/1000000); })
+                        .attr("x2", x(0))
+                        .attr("y1", function(d) { return y(d.label)+23; })
+                        .attr("y2", function(d) { return y(d.label)+23; })
+                        .attr("stroke", "grey")
 
+                // Circles
+                svg.selectAll("body")
+                    .data(data)
+                    .enter()
+                    .append('g')
+                    .append("circle")
+                        .attr("cx", function(d) {return x(d.value/1000000); })
+                        .attr("cy", function(d) { return y(d.label) +23; })
+                        .attr("r", "5")
+                        .style("fill", "#e41a1c")
+                        .attr("stroke", "black")
 
-        // x axis label
-        svg.append('g')
-            .append('text')
-            .attr("x", width/2 + 45)
-            .attr("y", 400)
-            .attr('font-size', "10px")
-            .text('$USD MM')
+                // x axis label
+                svg.append('g')
+                .append('text')
+                .attr("x", width/2 + 45)
+                .attr("y", 400)
+                .attr('font-size', "10px")
+                .text('$USD MM')
 
         }
 
