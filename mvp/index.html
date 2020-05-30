@@ -84,7 +84,7 @@
 
     <!-- main body -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <h3 style="margin-top: -80px;">Enrollment</h3>
+        <h3 style="margin-top: -80px;">BMMN Open Data Portal - US Education</h3>
         <hr>
 
         <!-- Dark table -->
@@ -107,8 +107,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Graph 2</h5>
-                        <p class="card-text">Pie Chart</p>
-                        <a href="#" class="btn btn-primary">Print</a>
+                        <svg id="Chart2" class="chart1" width="500" height="400"></svg>
                     </div>
                 </div>
             </div>
@@ -119,8 +118,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Graph 3</h5>
-                        <p class="card-text">Bar Chart</p>
-                        <a href="#" class="btn btn-primary">Print</a>
+                        <svg id="Chart3" class="chart1" width="500" height="400"></svg>
                     </div>
                 </div>
             </div>
@@ -128,8 +126,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Graph 4</h5>
-                        <p class="card-text">Scattor plots</p>
-                        <a href="#" class="btn btn-primary">Print</a>
+                        <svg id="Chart4" class="chart1" width="500" height="400"></svg>
                     </div>
                 </div>
             </div>
@@ -140,13 +137,23 @@
     <script>
         var svgMap = d3.select("#choropleth");
         var svgFinChart1 = d3.select("#Chart1");
+        var svgFinChart2 = d3.select("#Chart2");
+        var svgFinChart3 = d3.select("#Chart3");
+        var svgFinChart4 = d3.select("#Chart4");
         var svgEnrollChart1 = d3.select("#Chart1");
+        var svgEnrollChart2 = d3.select("#Chart2");
+        var svgEnrollChart3 = d3.select("#Chart3");
+        var svgEnrollChart4 = d3.select("#Chart4");
 
         var last_clicked = 'Nothing'
 
         function vizMapper (state_passed){
+
             if(last_clicked=='fin'){
                 FIN1.drawMap(svgFinChart1, state_passed);
+                FIN2.drawMap(svgFinChart2, state_passed);
+                FIN3.drawMap(svgFinChart3, state_passed);
+                FIN4.drawMap(svgFinChart4, state_passed);
             }
 
         };
@@ -167,12 +174,32 @@
 
             FIN1 = finMap1();
             FIN1.drawMap(svgFinChart1);
+
+            FIN2 = finMap2();
+            FIN2.drawMap(svgFinChart2);
+
+            FIN3 = finMap3();
+            FIN3.drawMap(svgFinChart3);
+
+            FIN4 = finMap4();
+            FIN4.drawMap(svgFinChart4);
+
         })
 
         $('#enroll').on('click', function () {
 
             ENR1 = enrollMap1();
             ENR1.drawMap(svgEnrollChart1);
+
+            ENR2 = enrollMap2();
+            ENR2.drawMap(svgEnrollChart2);
+
+            ENR3 = enrollMap3();
+            ENR3.drawMap(svgEnrollChart3);
+
+            ENR4 = enrollMap4();
+            ENR4.drawMap(svgEnrollChart4);
+
         })
 
     </script>
