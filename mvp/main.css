@@ -48,6 +48,24 @@
       margin: 25px auto;
   }
 
+  #Chart2{
+      width: 500px;
+      height: 400px;
+      margin: 25px auto;
+  }
+
+  #Chart3{
+      width: 500px;
+      height: 400px;
+      margin: 25px auto;
+  }
+
+  #Chart4{
+      width: 500px;
+      height: 400px;
+      margin: 25px auto;
+  }
+
   /* hover for map */
   #map path:hover {
     fill: gray;
