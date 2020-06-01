@@ -2,7 +2,7 @@ var finMap1 = function () {
 
     var newMap = {
 
-        drawMap: function (svg,state="Illinois") {
+        drawMap: function (svg,state) {
 
             var chart_width = +svg.attr("width")
             var chart_height = +svg.attr("height")
@@ -728,7 +728,7 @@ var finMap4 = function () {
 
     var newMap = {
 
-        drawMap: function (svg, state="Illinois") {
+        drawMap: function (svg, state) {
 
             var stateUpper = state.toUpperCase();
             var chart_width = +svg.attr("width")
@@ -1020,7 +1020,7 @@ var finMap3 = function () {
 
     var newMap = {
 
-        drawMap: function (svg, state="Illinois") {
+        drawMap: function (svg, state) {
 
             var stateUpper = state.toUpperCase();
             var chart_width = +svg.attr("width")
@@ -1164,7 +1164,7 @@ var finMap2 = function () {
 
     var newMap = {
 
-        drawMap: function (svg, state="Illinois") {
+        drawMap: function (svg, state) {
 
             var stateUpper = state.toUpperCase();
             var chart_width = +svg.attr("width")
