@@ -4,6 +4,8 @@ var enrollMap1 = function () {
 
         drawMap: function (svg, data, state) {
             //https://www.d3-graph-gallery.com/graph/line_select.html
+            console.log(data);
+            
 
             svg.selectAll("g").remove()
 
