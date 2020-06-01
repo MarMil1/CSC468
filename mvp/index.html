@@ -45,6 +45,13 @@
             <div class="col-md-2 bg-light d-none d-md-block sidebar">
                 <div class="left-sidebar">
                     <ul class="nav flex-column sidebar-nav">
+                       <!-- sidebar enrollment -->
+                        <li class="nav-item">
+                            <a id="about" class="nav-link" href="#about">
+                                <i class="fas fa-home mr-2"></i>
+                                About
+                            </a>
+                        </li>
                         <!-- sidebar enrollment -->
                         <li class="nav-item active">
                             <a id="enroll" class="nav-link" href="#enroll">
@@ -70,12 +77,12 @@
                         </li>
 
                         <!-- sidebar extras -->
-                        <li class="nav-item">
+                  <!--       <li class="nav-item">
                             <a id="extra" class="nav-link" href="#extra">
                                 <i class="fas fa-chart-line mr-2"></i>
                                 Extras
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -87,12 +94,17 @@
         <h3 style="margin-top: -80px;">BMMN Open Data Portal - US Education</h3>
         <hr>
 
+        <div id="about-section">
+            Hello!  Welcome to the BMMN Open Data Portal on US Education.  This portal has been created in order to give US residents a look into 3 categories regarding US Education.  These categories are Enrollment, Financial, and Achievement. You will notice all three categories on the left side bar.  Please click on each tab to explore the categories further.<br><br>
+
+            <a href="https://www.kaggle.com/noriuk/us-education-datasets-unification-project" target="_blank">Source</a>
+        </div>
         <!-- graphs -->
         <div class="map-graph">
             <svg id="choropleth" width="600" height="400"></svg>
         </div>
 
-        <h3>Graphs</h3>
+        <h3 id="graphs">Graphs</h3>
         <hr>
         <div class="row" id="row1">
             <div class="col-sm-6">
@@ -135,6 +147,7 @@
                 </div>
             </div>
         </div>
+
     </main>
 
     <!-- script -->
@@ -264,6 +277,10 @@
             $("#enroll-selectYear").css("display", "none");
             $("#enroll-selectGrade").css("display", "none");
             $("#card4").css("display", "");
+            $("#choropleth").css("display", "");
+            $("#graphs").css("display", "");
+            $("#about-section").css("display", "none");
+
             last_clicked = 'fin';
 
             FIN1 = finMap1();
@@ -288,6 +305,9 @@
             $("#enroll-selectYear").css("display", "");
             $("#enroll-selectGrade").css("display", "");
             $("#card4").css("display", "none");
+            $("#choropleth").css("display", "");
+            $("#graphs").css("display", "");
+            $("#about-section").css("display", "none");
 
             last_clicked = 'enroll';
 
@@ -316,7 +336,10 @@
             $("#enroll-selectYear").css("display", "none");
             $("#enroll-selectGrade").css("display", "none");
             $("#card4").css("display", "none");
-            
+            $("#choropleth").css("display", "");
+            $("#graphs").css("display", "");
+            $("#about-section").css("display", "none");
+
             last_clicked = 'achieve'
             data = getTestScoreData(state);
             ACH1.drawLineChart(svgAchieveChart1, data, state);
@@ -334,7 +357,19 @@
 
         })
 
-
+         $('#about').on('click', function () {
+            $("#choropleth").css("display", "none");
+            $('#achieve1-form').css("display", "none");
+            $("#row1").css("display", "none");
+            $("#row2").css("display", "none");
+            $("#enroll-selectYearMale").css("display", "none");
+            $("#enroll-selectYear").css("display", "none");
+            $("#enroll-selectGrade").css("display", "none");
+            $("#card4").css("display", "none");
+            $("#choropleth").css("display", "none");
+            $("#graphs").css("display", "none");
+            $("#about-section").css("display", "");
+        })
 
         function firstLoad() {
             
@@ -347,6 +382,8 @@
 
             ENR3 = enrollMap3();
             ENR3.drawMap(svgEnrollChart3, enrollmentData, state);
+
+            $("#about-section").css("display", "none");
 
         }
 

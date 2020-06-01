@@ -41,6 +41,9 @@
       background-color: #D3D3D3;
       margin: 25px auto;
   }
+  #graphs{
+      font-size: 25px;
+  }
 
   #Chart1{
       width: 500px;
@@ -63,6 +66,10 @@
   #Chart4{
       width: 500px;
       height: 400px;
+      margin: 25px auto;
+  }
+
+  #about-section{
       margin: 25px auto;
   }
 
