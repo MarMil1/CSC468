@@ -3,10 +3,7 @@ var enrollMap1 = function () {
     var newMap = {
 
         drawMap: function (svg, data, state) {
-            //https://www.d3-graph-gallery.com/graph/line_select.html
-            console.log(data);
-            
-
+ 
             svg.selectAll("g").remove()
 
             var dataList = []
@@ -130,7 +127,6 @@ var enrollMap1 = function () {
                 .attr('y', 10)
                 .attr('font-size', "20px")
                 .text(state + " enrollment per grade per year");
-
             
             }            
 
@@ -231,9 +227,6 @@ var enrollMap2 = function () {
                 // // Create new data with the selection?
                 // var dataFilter = dataList.map(function(d){return {year: d.year, value:d[selectedGroup]} })
                 var dataFilter = getData(selectedGroup);
-                console.log(dataFilter);
-                
-                console.log(g);
 
                 svg.selectAll(".arc").remove()
             
@@ -260,7 +253,6 @@ var enrollMap2 = function () {
             // When the year is changed, run the updatePieChart function
             d3.select("#enroll-selectYear").on("change", function(d) {
                 var selectedOption = d3.select(this).property("value")
-                console.log(selectedOption);
                 updatePieChart(selectedOption)
             })
 
@@ -270,7 +262,7 @@ var enrollMap2 = function () {
                 .attr('x', -150)
                 .attr('y', -180)
                 .attr('font-size', "20px")
-                .text(state + " enrollment per ethnicity female");
+                .text("FEMALE " + state + " enrollment per ethnicity");
 
             
         }
@@ -373,9 +365,6 @@ var enrollMap3 = function () {
                 // // Create new data with the selection?
                 // var dataFilter = dataList.map(function(d){return {year: d.year, value:d[selectedGroup]} })
                 var dataFilter = getData(selectedGroup);
-                console.log(dataFilter);
-                
-                console.log(g);
 
                 svg.selectAll(".arc").remove()
             
@@ -402,7 +391,6 @@ var enrollMap3 = function () {
             // When the year is changed, run the updatePieChart function
             d3.select("#enroll-selectYearMale").on("change", function(d) {
                 var selectedOption = d3.select(this).property("value")
-                console.log(selectedOption);
                 updatePieChart(selectedOption)
             })
 
@@ -412,7 +400,7 @@ var enrollMap3 = function () {
                 .attr('x', -150)
                 .attr('y', -180)
                 .attr('font-size', "20px")
-                .text(state + " enrollment per enthnicity male");
+                .text("MALE " + state + " enrollment per enthnicity");
 
             
         }

@@ -46,8 +46,8 @@
                 <div class="left-sidebar">
                     <ul class="nav flex-column sidebar-nav">
                         <!-- sidebar enrollment -->
-                        <li class="nav-item">
-                            <a id="enroll" class="nav-link active" href="#enroll">
+                        <li class="nav-item active">
+                            <a id="enroll" class="nav-link" href="#enroll">
                                 <i class="fas fa-user-graduate mr-2"></i>
                                 Enrollment
                             </a>
@@ -151,6 +151,11 @@
         var svgAchieveChart1 = d3.select("#Chart1");
         var svgAchieveChart2 = d3.select("#Chart2");
 
+        $(".nav-item").on('click', function() {
+            $(".nav-item").removeClass('active');
+            $(this).addClass('active');
+        })
+
 
         // set default as enrollment
         var last_clicked = 'enroll';
@@ -194,7 +199,6 @@
 
           function getEnrollmentData(selectedState) {
               // loop through data and check if state is the same as selected state
-              console.log(selectedState);
               
               var result = [];
               for (var i = 0; i < enrollmentCSVData.length; i++)  {
@@ -333,7 +337,6 @@
 
 
         function firstLoad() {
-            console.log("first load");
             
             enrollmentData = getEnrollmentData(state);
             ENR1 = enrollMap1();
