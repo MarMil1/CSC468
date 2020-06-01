@@ -15,12 +15,17 @@
 
 <body>
     <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="population.json.js"></script>
     <script src="geo_json_data.json.js"></script>
     <script src="choropleth.js"></script>
     <script src="d3-tip.js"></script>
     <script src="finCharts.js"></script>
-    <script src="enrollCharts.js"></script>
+
+    <!-- Enrollment charts, data and style-->
+    <script src="enrollment/enrollCharts.js"></script>
+    <script src="enrollment/enroll_states_cleaned.csv.js"></script>
+    <link rel="stylesheet" href="enrollment/enrollChart.css">
     
     <!-- tooltip -->
     <div id="tooltip" class="hidden">
@@ -45,7 +50,7 @@
                     <ul class="nav flex-column sidebar-nav">
                         <!-- sidebar enrollment -->
                         <li class="nav-item">
-                            <a id="enroll" class="nav-link active" href="#enrollment">
+                            <a id="enroll" class="nav-link active" href="#enroll">
                                 <i class="fas fa-user-graduate mr-2"></i>
                                 Enrollment
                             </a>
@@ -99,6 +104,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Graph 1</h5>
+                        <select id="enroll-selectGrade"></select>
                         <svg id="Chart1" class="chart1" width="500" height="400"></svg>
                     </div>
                 </div>
@@ -107,6 +113,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Graph 2</h5>
+                        <select id="enroll-selectYear"></select>
                         <svg id="Chart2" class="chart1" width="500" height="400"></svg>
                     </div>
                 </div>
@@ -118,6 +125,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Graph 3</h5>
+                        <select id="enroll-selectYearMale"></select>
                         <svg id="Chart3" class="chart1" width="500" height="400"></svg>
                     </div>
                 </div>
@@ -146,17 +154,54 @@
         var svgEnrollChart4 = d3.select("#Chart4");
 
         var last_clicked = 'Nothing'
+        var state = 'Illinois'
 
         function vizMapper (state_passed){
+            state = state_passed;
 
             if(last_clicked=='fin'){
                 FIN1.drawMap(svgFinChart1, state_passed);
                 FIN2.drawMap(svgFinChart2, state_passed);
                 FIN3.drawMap(svgFinChart3, state_passed);
                 FIN4.drawMap(svgFinChart4, state_passed);
+
+            } else if (last_clicked == 'enroll') {
+                enrollmentData = getEnrollmentData(state_passed);
+                ENR1.drawMap(svgEnrollChart1, enrollmentData, state_passed);
+                ENR2.drawMap(svgEnrollChart2, enrollmentData, state_passed);
+                ENR3.drawMap(svgEnrollChart3, enrollmentData, state_passed);
+
+                
             }
 
         };
+
+        // Parse enrollment data 
+        var enrollmentCSVData = d3.csvParse(enrollmentDataCSVText,
+          function(d) {
+              if (d.YEAR > 2009 && d.YEAR < 2016) {
+                  d.YEAR = +d.YEAR;
+              }
+              d.G01_A_A = +d.G01_A_A;
+              d.G02_A_A = +d.G02_A_A;
+          return d;
+          });
+
+          function getEnrollmentData(selectedState) {
+              // loop through data and check if state is the same as selected state
+              console.log(selectedState);
+              
+              var result = [];
+              for (var i = 0; i < enrollmentCSVData.length; i++)  {
+                  var stateFromData = enrollmentCSVData[i].STATE.replace(new RegExp("\_", "g"), " ")
+                if (stateFromData == selectedState.toUpperCase()) {
+                    result.push(enrollmentCSVData[i])
+                } 
+              }
+              return result;
+          }
+
+          
 
         MAP = Map();
         MAP.drawMap(svgMap);
@@ -188,17 +233,22 @@
 
         $('#enroll').on('click', function () {
 
+            last_clicked = 'enroll';
+
+            // get enrollment a list data based on state
+            enrollmentData = getEnrollmentData(state);
+
             ENR1 = enrollMap1();
-            ENR1.drawMap(svgEnrollChart1);
+            ENR1.drawMap(svgEnrollChart1, enrollmentData, state);
 
             ENR2 = enrollMap2();
-            ENR2.drawMap(svgEnrollChart2);
+            ENR2.drawMap(svgEnrollChart2, enrollmentData, state);
 
             ENR3 = enrollMap3();
-            ENR3.drawMap(svgEnrollChart3);
+            ENR3.drawMap(svgEnrollChart3, enrollmentData, state);
 
-            ENR4 = enrollMap4();
-            ENR4.drawMap(svgEnrollChart4);
+            // ENR4 = enrollMap4();
+            // ENR4.drawMap(svgEnrollChart4);
 
         })
 
