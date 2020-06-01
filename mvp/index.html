@@ -14,13 +14,19 @@
 </head>
 
 <body>
+    <!-- charts -->
     <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="population.json.js"></script>
     <script src="geo_json_data.json.js"></script>
     <script src="choropleth.js"></script>
     <script src="d3-tip.js"></script>
     <script src="finCharts.js"></script>
     <script src="enrollCharts.js"></script>
+    <script src="achieveCharts.js"></script>
+
+    <!-- data -->
+    <script src="chartsData/G4G8TestScore.csv.js"></script>
     
     <!-- tooltip -->
     <div id="tooltip" class="hidden">
@@ -61,10 +67,8 @@
 
                         <!-- sidebar achievement -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a id="achieve" class="nav-link" href="#achieve">
                                 <i class="fas fa-trophy mr-2"></i>
-                                <!-- <svg class="bi bi-chevron-right" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd" /></svg> -->
                                 Achievement
                             </a>
                         </li>
@@ -87,17 +91,18 @@
         <h3 style="margin-top: -80px;">BMMN Open Data Portal - US Education</h3>
         <hr>
 
-        <!-- Dark table -->
+        <!-- graphs -->
         <div class="map-graph">
             <svg id="choropleth" width="600" height="400"></svg>
         </div>
 
         <h3>Graphs</h3>
         <hr>
-        <div class="row">
+        <div class="row" id="row1">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="card1">
+                        <form id="achieve1-form" style="float:right; display:none"></form>
                         <h5 class="card-title">Graph 1</h5>
                         <svg id="Chart1" class="chart1" width="500" height="400"></svg>
                     </div>
@@ -105,7 +110,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="card2">
                         <h5 class="card-title">Graph 2</h5>
                         <svg id="Chart2" class="chart1" width="500" height="400"></svg>
                     </div>
@@ -113,10 +118,10 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="row2">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="card3">
                         <h5 class="card-title">Graph 3</h5>
                         <svg id="Chart3" class="chart1" width="500" height="400"></svg>
                     </div>
@@ -124,7 +129,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="card4">
                         <h5 class="card-title">Graph 4</h5>
                         <svg id="Chart4" class="chart1" width="500" height="400"></svg>
                     </div>
@@ -144,23 +149,59 @@
         var svgEnrollChart2 = d3.select("#Chart2");
         var svgEnrollChart3 = d3.select("#Chart3");
         var svgEnrollChart4 = d3.select("#Chart4");
+        var svgAchieveChart1 = d3.select("#Chart1");
+        var svgAchieveChart2 = d3.select("#Chart2");
 
-        var last_clicked = 'Nothing'
 
+        // set default as enrollment
+        var last_clicked = 'enroll';
+        var state = 'Illinois';
+
+        // draw charts based on state
         function vizMapper (state_passed){
+            state = state_passed
 
             if(last_clicked=='fin'){
                 FIN1.drawMap(svgFinChart1, state_passed);
                 FIN2.drawMap(svgFinChart2, state_passed);
                 FIN3.drawMap(svgFinChart3, state_passed);
                 FIN4.drawMap(svgFinChart4, state_passed);
+            } else if (last_clicked == 'achieve') {
+                data = getTestScoreData(state);
+                ACH1.drawLineChart(svgAchieveChart1, data, state);
+                ACH2.drawBarChart(svgAchieveChart2, data, state);
             }
 
         };
 
+        // read grade 4 and grade 8 test score data
+        var G4G8ScoreData = d3.csvParse(G4G8ScoreCSVData,
+                            function(d) {
+                                d.STATE = d.STATE;
+                                return d;
+                            });
+        
+
+        function getTestScoreData(selectedState) {   
+            var data = []
+            for (var i = 0; i < G4G8ScoreData.length; i++) {
+                var detail = G4G8ScoreData[i];
+                var state = detail.STATE;
+                state = state.replace(new RegExp("\_", "g"), " ");
+                if (state == selectedState.toUpperCase()) {
+                    data.push(detail)
+                }
+            }
+            return data
+        }
+
+        // draw choropleth
         MAP = Map();
         MAP.drawMap(svgMap);
+        ACH1 = LineChartVis();
+        ACH2 = BarChartVis();
 
+        // when state is selected, redraw charts
         MAP.dispatch.on(
             "selected",
             function(key) {
@@ -168,7 +209,18 @@
             } 
         );
 
+        // select grade achievement
+        ACH1.dispatch.on("change", function(selected) {
+            var selectedGrade = 4;
+            if (selected == "Grade 4") { grade = 4}
+            else if (selected == "Grade 8") { grade = 8}
+            ACH2.drawBarChart(svgAchieveChart2, data, state, grade, 2019);
+            
+        });
+
         $('#fin').on('click', function () {
+            $('#achieve1-form').css("display", "none");
+            $("#row2").css("display", "");
 
             last_clicked = 'fin';
 
@@ -187,6 +239,8 @@
         })
 
         $('#enroll').on('click', function () {
+            $('#achieve1-form').css("display", "none");
+            $("#row2").css("display", "");
 
             ENR1 = enrollMap1();
             ENR1.drawMap(svgEnrollChart1);
@@ -199,6 +253,17 @@
 
             ENR4 = enrollMap4();
             ENR4.drawMap(svgEnrollChart4);
+
+        })
+
+        $('#achieve').on('click', function () {
+            $('#achieve1-form').css("display", "");
+            $("#row2").css("display", "none");
+            
+            last_clicked = 'achieve'
+            data = getTestScoreData(state);
+            ACH1.drawLineChart(svgAchieveChart1, data, state);
+            ACH2.drawBarChart(svgAchieveChart2, data, state);
 
         })
 
