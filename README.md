@@ -8,13 +8,13 @@ All of the tabs have coropleth of the US with which a user can interact by click
 
 ![view1](viewsDemo/view1.png)
 
-# Enrollment tab
+## Enrollment tab
 The line chart graph shows enrollment per grade per year for grades 1 to 12. Pie chart two and three show female and male enrollment per ethnicity from 2009 to 2016 years selectable in the dropdown menu.
 
 ![view2](viewsDemo/view2.png)
 ![view3](viewsDemo/view3.png)
 
-# Financial tab
+## Financial tab
 The first bar graph shows revenue and expenditure per student comparing state and national average (actual dollar amount). 
 Dot chart shows revenues and expenditures with dollar amount in millions and is ordered by types expenditures and revenues.
 Next, bar chart shows each bar count that represents number of states in that bar where actual dollar amount showing support service expenditure per student.
@@ -23,7 +23,7 @@ Bubble chart in the end represent states and size of Instruction expenditure per
 ![view4](viewsDemo/view4.png)
 ![view5](viewsDemo/view5.png)
 
-# Achievement tab
+## Achievement tab
 The line chart shows average test scores in Math and Reading for grades 4 and 8 by year. The bar chart compares between male and female test score in math and reading. Selecting grade above line chart toggles data between 4th and 8th grade in line and bar chart.
 
 ![view6](viewsDemo/view6.png)
